@@ -1,6 +1,6 @@
 'use strict';
 
-const events = require('./hub.js');
+const events = require('../hub.js');
 
 console.log('I am the vendor');
 
