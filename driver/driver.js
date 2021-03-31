@@ -1,16 +1,24 @@
 'use strict';
 
-const events = require('../hub.js');
+const events = require('../events/events.js');
 
 events.on('alert', getsPackage);
+events.on('enRoute', enRoute);
 
-let timestamp = 1616923662;
-const date = new Date(timestamp * 1000);
-const hours = date.getHours();
 
 function getsPackage(payload) {
-  if (payload.notify === true) {
-    console.log('Your package is being picked up for delivery');
-    events.emit('alert', `Your package was picked up on, ${date} at ${hours}`);
-  }
+  setTimeout(() => {
+    console.log(`Your package: Order ID: ${payload.orderId}, is being picked up for delivery`);
+    events.emit('enRoute', payload);
+  }, 1000)
 }
+
+function enRoute(payload) {
+  setTimeout(() => {
+    console.log(`Your package: Order ID: ${payload.orderId}\n`);
+    events.emit('Your package was delivered', payload)
+  }, 3000)
+}
+
+module.exports.getsPackage;
+module.exports.enRoute;
