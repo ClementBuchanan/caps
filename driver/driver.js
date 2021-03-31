@@ -2,7 +2,7 @@
 
 const events = require('../events/events.js');
 
-events.on('alert', getsPackage);
+events.on('pickup', getsPackage);
 events.on('enRoute', enRoute);
 
 
@@ -16,7 +16,7 @@ function getsPackage(payload) {
 function enRoute(payload) {
   setTimeout(() => {
     console.log(`Your package: Order ID: ${payload.orderId}\n`);
-    events.emit('Your package was delivered', payload)
+    events.emit('event', payload)
   }, 3000)
 }
 
