@@ -1,35 +1,38 @@
 'use strict';
 
-const events = require('../hub.js');
+const events = require('../events/events.js');
+const faker = require('faker');
+const { fake } = require('faker');
 
-console.log('I am the vendor');
+console.log('I am the vendor', fake);
 
-let timestamp = 1616923662;
-const date = new Date(timestamp * 1000);
-const hours = date.getHours();
+events.on('start', newSale)
+events.on('event', delivered)
 
-events.on('shipping', ready);
-events.on('shipping', transit);
-events.on('shpping', delivered);
 
-function ready(payload) {
-  if (payload.pickup === yes) {
-    console.log('Alert driver. Package is ready for pickup.');
-  } else {
-    console.log('heavy weight');
-  }
-}
+function newSale() {
+  setInterval(() => {
+    let payload = {
+      storeName: faker.company.companyName(),
+      customerName: faker.name.findName(),
+      customerAddress: faker.address.streetAddress(),
+      customerZipcode: faker.address.zipCode(),
 
-function transit(payload) {
-  if (payload.transit === yes) {
-    console.log('The package is in transit');
-  }
+    }
+
+    console.log(`New sale item is ready for pickup\n
+    ${payload.storeName}\n
+    ${payload.customerName}\n
+    ${payload.customerAddress}\n
+    ${payload.customerZipcode}\n`)
+
+    events.emit('pickup', payload);
+  }, 2000);
 }
 
 function delivered(payload) {
-  if (payload.delivered === yes) {
-    console.log(`The package was delivered on ${date} at ${hours}`);
-  } else {
-    console.log('The package is still in transit');
-  }
+  console.log(`Your package ${payload.orderId} was delivered on ${new Date()}`)
 }
+
+module.exports = newSale;
+module.exports = delivered;
