@@ -8,7 +8,7 @@ const { fake } = require('faker');
 console.log('I am the vendor', fake);
 
 events.on('start', newSale)
-events.on('event', delivered)
+events.on('event', deliveryMade)
 
 
 
@@ -34,9 +34,11 @@ function newSale() {
   }, 5000);
 }
 
-function delivered(payload) {
+function deliveryMade(payload) {
   console.log(`Your package ${payload.orderId} was delivered on ${new Date()}`)
 }
 
-module.exports = newSale;
-module.exports = delivered;
+module.exports = {
+  newSale: newSale,
+  deliveryMade: deliveryMade
+}
