@@ -20,5 +20,7 @@ function enRoute(payload) {
   }, 3000)
 }
 
-module.exports.getsPackage;
-module.exports.enRoute;
+module.exports = {
+  getsPackage: getsPackage,
+  enRoute: enRoute,
+}
